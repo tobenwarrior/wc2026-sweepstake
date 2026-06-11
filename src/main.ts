@@ -1,6 +1,7 @@
 import { applyOverrides, computeStandings } from './scoring';
 import { validateRules, validateResults, validateParticipants } from './validate';
 import { renderLeaderboard, renderRules, renderMatches, showBanner } from './render';
+import { renderBracket } from './bracket';
 import { initAdmin } from './admin';
 import './style.css';
 
@@ -29,6 +30,7 @@ async function boot() {
     const standings = computeStandings(merged, rules, participants);
     renderLeaderboard(document.getElementById('leaderboard')!, standings, participants);
     renderRules(document.getElementById('rules')!, rules);
+    renderBracket(document.getElementById('bracket')!, merged.matches, participants);
     renderMatches(document.getElementById('matches')!, merged, participants);
     document.getElementById('synced')!.textContent = results.lastSynced
       ? `Last synced: ${new Date(results.lastSynced).toLocaleString()}`

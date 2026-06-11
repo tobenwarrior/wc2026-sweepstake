@@ -55,6 +55,31 @@ table { width: 100%; border-collapse: collapse; background: #fff; border: 1px so
 td { padding: 0.45rem 0.7rem; border-bottom: 1px solid var(--line); }
 td.pts { text-align: right; }
 tr.live td { background: #fff7e0; }
+.bracket {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+.round { min-width: 180px; display: flex; flex-direction: column; }
+.round h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin: 0.2rem 0 0.4rem; }
+.round .bmatch { margin: auto 0; }
+.bmatch {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  margin: 0.3rem 0;
+  font-size: 0.85rem;
+}
+.bmatch.live { border-color: var(--accent); }
+.bmatch.tbd { opacity: 0.45; }
+.slot { display: flex; justify-content: space-between; padding: 0.3rem 0.5rem; }
+.slot + .slot { border-top: 1px solid var(--line); }
+.slot.winner .tname { font-weight: 700; }
+.slot.winner { background: #fdf3d9; }
+.owner { color: var(--accent); font-size: 0.7rem; }
+.score { font-weight: 700; min-width: 1.2rem; text-align: right; }
+.pens { padding: 0.2rem 0.5rem; font-size: 0.72rem; color: #777; border-top: 1px dashed var(--line); }
 footer { margin-top: 2rem; text-align: right; }
 footer a { color: #bbb; font-size: 0.8rem; text-decoration: none; }
 #admin-panel {
