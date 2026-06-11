@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "wc2026-sweepstake",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "/Users/lucas/Documents/my_test_projects/wc2026-sweepstake",
+      "port": 5173
+    }
+  ]
+}

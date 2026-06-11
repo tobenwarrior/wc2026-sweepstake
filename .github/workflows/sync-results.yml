@@ -1,0 +1,36 @@
+name: Sync results
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch results
+        id: fetch
+        run: |
+          set +e
+          node scripts/fetch-results.mjs
+          code=$?
+          set -e
+          if [ "$code" = "78" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          elif [ "$code" != "0" ]; then
+            exit "$code"
+          fi
+        env:
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
+      - name: Commit
+        if: steps.fetch.outputs.skip != 'true'
+        run: |
+          git config user.name "results-bot"
+          git config user.email "actions@github.com"
+          git add public/data/results.json
+          git diff --cached --quiet || (git commit -m "data: sync results" && git push)

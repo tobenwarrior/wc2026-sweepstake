@@ -1,0 +1,79 @@
+:root {
+  --ink: #14213d;
+  --paper: #faf6ec;
+  --accent: #e4572e;
+  --line: #e3dcc8;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0 auto;
+  max-width: 720px;
+  padding: 1rem;
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+header h1 { margin-bottom: 0.2rem; }
+#synced { color: #777; font-size: 0.85rem; margin-top: 0; }
+#banner {
+  background: #c0392b;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+h2 {
+  border-bottom: 3px solid var(--ink);
+  padding-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.05rem;
+}
+.entry {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin: 0.4rem 0;
+  padding: 0.5rem 0.8rem;
+}
+.entry summary { cursor: pointer; display: flex; align-items: center; gap: 0.6rem; }
+.rank {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+.pts { margin-left: auto; font-weight: 700; color: var(--accent); }
+.team { margin: 0.5rem 0 0 2.2rem; }
+.team ul { margin: 0.2rem 0; color: #555; font-size: 0.9rem; }
+table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); }
+td { padding: 0.45rem 0.7rem; border-bottom: 1px solid var(--line); }
+td.pts { text-align: right; }
+tr.live td { background: #fff7e0; }
+footer { margin-top: 2rem; text-align: right; }
+footer a { color: #bbb; font-size: 0.8rem; text-decoration: none; }
+#admin-panel {
+  background: #fff;
+  border: 2px dashed var(--accent);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+#admin-panel label { display: flex; justify-content: space-between; margin: 0.3rem 0; gap: 1rem; }
+#admin-panel input[type="number"] { width: 5rem; }
+#admin-panel textarea { width: 100%; min-height: 10rem; font-family: monospace; }
+#admin-panel button {
+  background: var(--ink);
+  color: #fff;
+  border: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+#admin-panel fieldset { border: 1px solid var(--line); margin: 0.8rem 0; }
