@@ -15,6 +15,7 @@ export interface Match {
 export interface Results {
   lastSynced: string;
   source: string;
+  teamNames?: Record<string, string>;
   matches: Match[];
 }
 

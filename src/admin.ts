@@ -129,16 +129,68 @@ export function initAdmin(state: AdminState) {
   );
   panel.appendChild(ovFs);
 
-  // --- Participants editor (raw JSON) ---
+  // --- Participants editor ---
   const pFs = document.createElement('fieldset');
-  pFs.innerHTML = '<legend>Participants & teams (raw JSON)</legend>';
-  const ta = document.createElement('textarea');
-  ta.value = JSON.stringify(state.participants, null, 2);
-  pFs.appendChild(ta);
+  pFs.innerHTML = '<legend>Participants & team assignments</legend>';
+  const knownTeams: Record<string, string> = {
+    ...(state.results.teamNames ?? {}),
+    ...state.participants.teamNames,
+  };
+  const datalist = document.createElement('datalist');
+  datalist.id = 'team-codes';
+  datalist.innerHTML = Object.entries(knownTeams)
+    .map(([code, name]) => `<option value="${code}">${name}</option>`)
+    .join('');
+  pFs.appendChild(datalist);
+
+  const rows = document.createElement('div');
+  const addRow = (name = '', teams: string[] = []) => {
+    const row = document.createElement('div');
+    row.className = 'participant-row';
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = 'name';
+    nameInput.value = name;
+    const teamsInput = document.createElement('input');
+    teamsInput.type = 'text';
+    teamsInput.placeholder = 'team codes, e.g. BRA, MEX';
+    teamsInput.value = teams.join(', ');
+    teamsInput.setAttribute('list', 'team-codes');
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.textContent = '✕';
+    del.title = 'remove participant';
+    del.onclick = () => row.remove();
+    row.append(nameInput, teamsInput, del);
+    rows.appendChild(row);
+  };
+  for (const p of state.participants.participants) addRow(p.name, p.teams);
+  pFs.appendChild(rows);
+
+  const addBtn = document.createElement('button');
+  addBtn.type = 'button';
+  addBtn.textContent = '+ Add participant';
+  addBtn.onclick = () => addRow();
+  pFs.appendChild(addBtn);
+
   pFs.appendChild(
     saveButton('Save participants', async () => {
-      const parsed = JSON.parse(ta.value); // throws with a clear message if invalid
-      await commitFile('public/data/participants.json', parsed, 'admin: update participants');
+      const participants = [...rows.querySelectorAll('.participant-row')]
+        .map(row => {
+          const [nameInput, teamsInput] = row.querySelectorAll('input');
+          return {
+            name: nameInput.value.trim(),
+            teams: teamsInput.value
+              .split(',')
+              .map(s => s.trim().toUpperCase())
+              .filter(Boolean),
+          };
+        })
+        .filter(p => p.name);
+      if (!participants.length) throw new Error('add at least one participant');
+      const next = { teamNames: state.participants.teamNames, participants };
+      await commitFile('public/data/participants.json', next, 'admin: update participants');
+      state.participants = next;
     }),
   );
   panel.appendChild(pFs);

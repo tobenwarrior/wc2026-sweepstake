@@ -24,6 +24,8 @@ async function boot() {
       return;
     }
     const merged = applyOverrides(results, overrides);
+    // API-provided team names fill the gaps; participants.json entries win
+    participants.teamNames = { ...(results.teamNames ?? {}), ...participants.teamNames };
     const standings = computeStandings(merged, rules, participants);
     renderLeaderboard(document.getElementById('leaderboard')!, standings, participants);
     renderRules(document.getElementById('rules')!, rules);

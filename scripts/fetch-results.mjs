@@ -62,7 +62,14 @@ const matches = data.matches.map(mt => ({
   kickoff: mt.utcDate,
 }));
 
-const out = { lastSynced: new Date().toISOString(), source: 'football-data.org', matches };
+const teamNames = {};
+for (const mt of data.matches) {
+  for (const t of [mt.homeTeam, mt.awayTeam]) {
+    if (t?.tla && t?.name) teamNames[t.tla] = t.name;
+  }
+}
+
+const out = { lastSynced: new Date().toISOString(), source: 'football-data.org', teamNames, matches };
 const path = 'public/data/results.json';
 let prev = '';
 try {
