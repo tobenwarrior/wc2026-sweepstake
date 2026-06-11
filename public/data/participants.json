@@ -1,0 +1,10 @@
+{
+  "teamNames": {
+    "BRA": "Brazil",
+    "MEX": "Mexico"
+  },
+  "participants": [
+    { "name": "Lucas", "teams": ["BRA"] },
+    { "name": "Friend 1", "teams": ["MEX"] }
+  ]
+}

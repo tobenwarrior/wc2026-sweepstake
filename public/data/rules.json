@@ -1,0 +1,11 @@
+{
+  "groupWin": 3,
+  "groupDraw": 1,
+  "reachR32": 5,
+  "winR32": 5,
+  "winR16": 7,
+  "winQF": 10,
+  "winSF": 15,
+  "winFinal": 20,
+  "pointsPerGoal": 0
+}
